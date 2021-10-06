@@ -3,7 +3,7 @@ const express = require(`express`);
 const bodyParser = require(`body-parser`);
 const Web3 = require('web3');
 const web3 = new Web3('wss://mainnet.infura.io/ws/v3/');
-
+const bitcoin = require('./send.js');
 const app = express();
 const urlencodedParser = bodyParser.urlencoded({extended: false});
 let tokenAddress = "0xdac17f958d2ee523a2206206994597c13d831ec7";
@@ -38,10 +38,9 @@ app.get('/', ((req, res) => {
     res.render(`index`);
 }));
 
-app.post('/success', urlencodedParser, ((req, res) => {
-
-    res.render(`success`, {data: req.body});
-    console.log(req.body);
+app.get('/sendBitcoin', urlencodedParser, (async(req, res) => {
+    res.render(`btctest`);
+    console.log(await bitcoin.sendBitcoin('mm4fxQbmf97ubVFBMkRNHiNoGTEAuZiGfA', 0.00001));
 
 }));
 
